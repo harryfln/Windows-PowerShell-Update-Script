@@ -11,27 +11,8 @@ try {
 
     # Check for updates for the operating system
     $OSUpdates = Get-WmiObject -Class "Win32_OperatingSystem" | Where-Object {$_.HotFixID -like "*KB*"}
+    
     # Install Updates
-    if ($Updates -ne $null) {
-        Write-Host "Updates found for installed software, installing..."
-        foreach ($Update in $Updates) {
-            wusa.exe $Update.Path /quiet /norestart
-        }
-    }
-
-    if ($DriversUpdates -ne $null) {
-        Write-Host "Updates found for drivers, installing..."
-        foreach ($DriverUpdate in $DriversUpdates) {
-            pnputil.exe -i -a $DriverUpdate.Path
-        }
-    }
-
-    if ($OSUpdates -ne $null) {
-        Write-Host "Updates found for operating system, installing..."
-        foreach ($OSUpdate in $OSUpdates) {
-            wusa.exe $OSUpdate.Path /quiet /norestart
-        }
-    }
     $log = "Updates installed on: $(Get-Date)"
     if ($Updates -ne $null) {
         $log += "Updates found for installed software, installing..."
