@@ -67,30 +67,3 @@ catch {
     # Log the error to a file
     $_ | Out-File -FilePath C:\Users\harry\Scripts\WindowsUpdateScript.log -Append
 }
-
-    if ($DriversUpdates -ne $null) {
-        $log += "Updates found for drivers, installing..."
-        foreach ($DriverUpdate in $DriversUpdates) {
-            pnputil.exe -i -a $DriverUpdate.Path
-            $log += "Installed update: $DriverUpdate.HotFixID"
-        }
-    }
-
-    if ($OSUpdates -ne $null) {
-        $log += "Updates found for operating system, installing..."
-        foreach ($OSUpdate in $OSUpdates) {
-            wusa.exe $OSUpdate.Path /quiet /norestart
-            $log += "Installed update: $OSUpdate.HotFixID"
-        }
-    }
-
-    $log += "`n"
-    # Output the log to a file
-    $log | Out-File -FilePath C:\Users\harry\Scripts\WindowsUpdateScript.log -Append
-
-}
-catch {
-    Write-Host "An error occurred: $_"
-    # Log the error to a file
-    $_ | Out-File -FilePath C:\Users\harry\Scripts\WindowsUpdateScript.log -Append
-}
